@@ -277,6 +277,17 @@
             transition: color 0.4s, padding-left 0.4s;
             position: relative;
         }
+        .footer-link:hover { color: #f3f1ec; padding-left: 10px; }
+        .footer-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 0; height: 1px;
+            background: #AC1743;
+            transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .footer-link:hover::before { width: 6px; }
 
         /* LIVE CHAT */
         .chat-button {
@@ -596,6 +607,411 @@
         .cal-btn.is-selected { background: #AC1743; color: #f3f1ec; }
         .cal-btn.is-selected:hover { background: #AC1743; }
 
+        /* ===== BOOKING DETAIL MODAL ===== */
+        .booking-detail-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 95;
+            background: rgba(45, 42, 38, 0.72);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 24px;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.5s;
+        }
+        .booking-detail-modal.is-open { opacity: 1; visibility: visible; }
+
+        .booking-detail-modal__inner {
+            background: #f3f1ec;
+            width: 100%;
+            max-width: 1080px;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            padding: 40px 32px 40px;
+            margin: auto;
+        }
+        .booking-detail-modal.is-open .booking-detail-modal__inner { transform: translateY(0); }
+
+        @media (min-width: 768px) {
+            .booking-detail-modal__inner { padding: 56px 56px 48px; }
+        }
+
+        .booking-detail-modal__close {
+            position: absolute;
+            top: 16px; right: 16px;
+            width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            background: transparent;
+            border: none;
+            color: #2d2a26;
+            cursor: pointer;
+            z-index: 5;
+            transition: color 0.3s;
+        }
+        .booking-detail-modal__close:hover { color: #AC1743; }
+        .booking-detail-modal__close svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 1.4; fill: none; }
+
+        /* DATE CHIP (read-only) */
+        .date-chip {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 20px;
+            background: rgba(79, 92, 78, 0.06);
+            border: 1px solid rgba(79, 92, 78, 0.15);
+        }
+        .date-chip__icon {
+            width: 20px; height: 20px;
+            stroke: #4f5c4e; stroke-width: 1.5; fill: none;
+            flex-shrink: 0;
+        }
+        .date-chip__label {
+            font-size: 9.5px;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: rgba(45, 42, 38, 0.5);
+            font-family: 'Work Sans', sans-serif;
+            margin-bottom: 4px;
+        }
+        .date-chip__value {
+            font-family: 'Marcellus', serif;
+            font-size: 16px;
+            color: #2d2a26;
+        }
+
+        /* FORM */
+        .field-label {
+            font-size: 10px;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            font-weight: 500;
+            font-family: 'Work Sans', sans-serif;
+            color: rgba(45, 42, 38, 0.55);
+            display: block;
+            margin-bottom: 10px;
+        }
+        .field-input,
+        .field-select,
+        .field-textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(45, 42, 38, 0.2);
+            padding: 12px 0;
+            font-family: 'Work Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 300;
+            color: #2d2a26;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .field-input:focus,
+        .field-select:focus,
+        .field-textarea:focus { border-bottom-color: #AC1743; }
+        .field-input::placeholder,
+        .field-textarea::placeholder { color: rgba(45, 42, 38, 0.3); }
+        .field-select { cursor: pointer; }
+        .field-textarea { resize: none; min-height: 90px; }
+
+        /* ROOM CARD */
+        .room-card {
+            border: 1px solid rgba(45, 42, 38, 0.15);
+            transition: border-color 0.3s, background 0.3s;
+            cursor: pointer;
+            padding: 18px;
+            position: relative;
+        }
+        .room-card:hover { border-color: rgba(172, 23, 67, 0.5); }
+        .room-card.is-selected {
+            border-color: #AC1743;
+            background: rgba(172, 23, 67, 0.04);
+        }
+        .room-card.is-selected::after {
+            content: '✓';
+            position: absolute;
+            top: 12px; right: 14px;
+            color: #AC1743;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        /* Non-interactive single card */
+        .room-card.is-single {
+            cursor: default;
+        }
+        .room-card.is-single:hover {
+            border-color: #AC1743;
+        }
+
+        /* SUBMIT */
+        .submit-btn {
+            width: 100%;
+            background: #AC1743;
+            color: #f3f1ec;
+            padding: 20px 24px;
+            font-family: 'Work Sans', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .submit-btn:hover { background: #2d2a26; transform: translateY(-1px); }
+        .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* SUMMARY */
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(243, 241, 236, 0.12);
+            font-size: 13.5px;
+        }
+        .summary-row:last-child { border-bottom: none; }
+        .summary-row__label { color: rgba(243, 241, 236, 0.5); letter-spacing: 0.04em; }
+        .summary-row__value { color: #f3f1ec; font-family: 'Marcellus', serif; font-size: 15px; }
+
+        /* STEPPER */
+        .stepper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 10px;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 500;
+        }
+        .stepper__dot {
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            border: 1px solid rgba(45, 42, 38, 0.2);
+            color: rgba(45, 42, 38, 0.4);
+            font-size: 10px;
+            transition: all 0.3s;
+        }
+        .stepper__dot.is-active {
+            background: #AC1743;
+            border-color: #AC1743;
+            color: #f3f1ec;
+        }
+        .stepper__dot.is-done {
+            background: #4f5c4e;
+            border-color: #4f5c4e;
+            color: #f3f1ec;
+        }
+        .stepper__line {
+            width: 24px; height: 1px;
+            background: rgba(45, 42, 38, 0.2);
+        }
+
+        /* ===== PAYMENT MODAL ===== */
+        .payment-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 98;
+            background: rgba(45, 42, 38, 0.78);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 24px;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.5s;
+        }
+        .payment-modal.is-open { opacity: 1; visibility: visible; }
+
+        .payment-modal__inner {
+            background: #f3f1ec;
+            width: 100%;
+            max-width: 620px;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            padding: 40px 32px 40px;
+            margin: auto;
+        }
+        .payment-modal.is-open .payment-modal__inner { transform: translateY(0); }
+
+        @media (min-width: 768px) {
+            .payment-modal__inner { padding: 48px 48px 44px; }
+        }
+
+        .payment-modal__close {
+            position: absolute;
+            top: 16px; right: 16px;
+            width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            background: transparent;
+            border: none;
+            color: #2d2a26;
+            cursor: pointer;
+            z-index: 5;
+            transition: color 0.3s;
+        }
+        .payment-modal__close:hover { color: #AC1743; }
+        .payment-modal__close svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 1.4; fill: none; }
+
+        /* PAYMENT METHOD CARD */
+        .pay-method {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 18px;
+            border: 1px solid rgba(45, 42, 38, 0.15);
+            cursor: pointer;
+            transition: border-color 0.3s, background 0.3s;
+            position: relative;
+        }
+        .pay-method:hover { border-color: rgba(172, 23, 67, 0.5); }
+        .pay-method.is-selected {
+            border-color: #AC1743;
+            background: rgba(172, 23, 67, 0.04);
+        }
+        .pay-method.is-selected::after {
+            content: '✓';
+            position: absolute;
+            top: 12px; right: 14px;
+            color: #AC1743;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .pay-method__icon {
+            width: 40px; height: 28px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(45, 42, 38, 0.08);
+            flex-shrink: 0;
+        }
+        .pay-method__icon svg {
+            width: 22px; height: 22px;
+            stroke: #2d2a26; stroke-width: 1.4; fill: none;
+        }
+        .pay-method__name {
+            font-family: 'Marcellus', serif;
+            font-size: 15px;
+            color: #2d2a26;
+        }
+        .pay-method__desc {
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(45, 42, 38, 0.45);
+            margin-top: 2px;
+        }
+
+        /* PAYMENT SUMMARY BOX */
+        .pay-summary {
+            background: rgba(79, 92, 78, 0.06);
+            border: 1px solid rgba(79, 92, 78, 0.15);
+            padding: 20px 22px;
+        }
+        .pay-summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 13.5px;
+        }
+        .pay-summary-row__label { color: rgba(45, 42, 38, 0.6); font-weight: 300; }
+        .pay-summary-row__value { color: #2d2a26; font-family: 'Marcellus', serif; font-size: 14px; }
+        .pay-summary-total {
+            border-top: 1px solid rgba(45, 42, 38, 0.15);
+            margin-top: 12px;
+            padding-top: 14px;
+        }
+        .pay-summary-total .pay-summary-row__label { color: #2d2a26; font-weight: 500; letter-spacing: 0.04em; }
+        .pay-summary-total .pay-summary-row__value { color: #AC1743; font-size: 22px; }
+
+        /* CARD FIELDS */
+        .card-field {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(45, 42, 38, 0.2);
+            padding: 12px 0;
+            font-family: 'Work Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 300;
+            color: #2d2a26;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .card-field:focus { border-bottom-color: #AC1743; }
+        .card-field::placeholder { color: rgba(45, 42, 38, 0.3); }
+
+        /* PAY BUTTON */
+        .pay-btn {
+            width: 100%;
+            background: #AC1743;
+            color: #f3f1ec;
+            padding: 20px 24px;
+            font-family: 'Work Sans', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        .pay-btn:hover:not(:disabled) { background: #2d2a26; transform: translateY(-1px); }
+        .pay-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .pay-btn svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 1.6; fill: none; }
+
+        /* PAYMENT SUCCESS */
+        .pay-success {
+            display: none;
+            text-align: center;
+            padding: 24px 0;
+        }
+        .pay-success.is-visible { display: block; }
+        .pay-success__check {
+            width: 68px; height: 68px;
+            border-radius: 50%;
+            background: #4f5c4e;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 28px;
+        }
+        .pay-success__check svg {
+            width: 32px; height: 32px;
+            stroke: #f3f1ec; stroke-width: 2.2; fill: none;
+        }
+
+        /* SECURE BADGE */
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 18px;
+            font-size: 9.5px;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: rgba(45, 42, 38, 0.45);
+            font-family: 'Work Sans', sans-serif;
+        }
+        .secure-badge svg {
+            width: 12px; height: 12px;
+            stroke: currentColor; stroke-width: 1.6; fill: none;
+        }
+
         @media (max-width: 640px) {
             .chat-panel { width: 100vw; height: 100vh; max-width: none; max-height: none; bottom: 0; right: 0; top: 0; left: 0; }
             .chat-button { bottom: 20px; left: 20px; height: 46px; padding: 0 14px 0 12px; font-size: 10px; }
@@ -603,6 +1019,11 @@
             .whatsapp-button { bottom: 20px; right: 20px; height: 46px; width: 46px; }
             .booking-modal { padding: 0; }
             .booking-modal__inner { max-height: 100vh; height: 100vh; max-width: 100vw; padding: 32px 20px 24px; }
+            .booking-detail-modal { padding: 0; }
+            .booking-detail-modal__inner { padding: 32px 20px 32px; }
+            .payment-modal { padding: 0; }
+            .payment-modal__inner { padding: 32px 20px 32px; }
+            .stepper__line { width: 12px; }
         }
 
         @media (max-width: 1024px) {
@@ -832,7 +1253,7 @@
                                         View full details
                                         <span>→</span>
                                     </a>
-                                    <a href="#" data-open-booking class="link-underline text-mist border-mist/35 hover:border-mist">
+                                    <a href="#" data-open-booking data-room="Rumah Ibu" data-room-type="Master Suite · 2 Bedrooms" data-room-price="1200" class="link-underline text-mist border-mist/35 hover:border-mist">
                                         Reserve Rumah Ibu
                                         <span>→</span>
                                     </a>
@@ -904,7 +1325,7 @@
                                         View full details
                                         <span>→</span>
                                     </a>
-                                    <a href="#" data-open-booking class="link-underline text-mist border-mist/35 hover:border-mist">
+                                    <a href="#" data-open-booking data-room="Rumah Bunga" data-room-type="Garden Pavilion · 1 Bedroom" data-room-price="750" class="link-underline text-mist border-mist/35 hover:border-mist">
                                         Reserve Rumah Bunga
                                         <span>→</span>
                                     </a>
@@ -966,7 +1387,7 @@
                                         View full details
                                         <span>→</span>
                                     </a>
-                                    <a href="#" data-open-booking class="link-underline text-mist border-mist/35 hover:border-mist">
+                                    <a href="#" data-open-booking data-room="Rumah Rimba" data-room-type="Forest Pavilion · 2 Bedrooms" data-room-price="1100" class="link-underline text-mist border-mist/35 hover:border-mist">
                                         Reserve Rumah Rimba
                                         <span>→</span>
                                     </a>
@@ -1038,7 +1459,7 @@
                                         View full details
                                         <span>→</span>
                                     </a>
-                                    <a href="#" data-open-booking class="link-underline text-mist border-mist/35 hover:border-mist">
+                                    <a href="#" data-open-booking data-room="Rumah Jepun" data-room-type="Garden Pavilion · 2 Bedrooms" data-room-price="1050" class="link-underline text-mist border-mist/35 hover:border-mist">
                                         Reserve Rumah Jepun
                                         <span>→</span>
                                     </a>
@@ -1425,7 +1846,9 @@
         </div>
     </main>
 
-    <!-- BOOKING MODAL -->
+    <!-- ============================================================
+         MODAL 1 — CALENDAR
+    ============================================================ -->
     <div id="bookingModal" class="booking-modal" role="dialog" aria-modal="true" aria-label="Check availability">
         <div class="booking-modal__inner" data-lenis-prevent>
             <button class="booking-modal__close" id="bookingClose" aria-label="Close">
@@ -1494,6 +1917,377 @@
         </div>
     </div>
 
+    <!-- ============================================================
+         MODAL 2 — BOOKING DETAIL
+    ============================================================ -->
+    <div id="bookingDetailModal" class="booking-detail-modal" role="dialog" aria-modal="true" aria-label="Complete your booking">
+        <div class="booking-detail-modal__inner" data-lenis-prevent>
+            <button class="booking-detail-modal__close" id="bookingDetailClose" aria-label="Close">
+                <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+
+            <!-- HEADER -->
+            <div class="mb-10 md:mb-12">
+                <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8">
+                    <div>
+                        <span class="eyebrow text-moss/70 mb-5 block">Reservation</span>
+                        <h3 class="font-serif text-3xl md:text-4xl lg:text-5xl leading-[1.05] text-charcoal tracking-tight">
+                            Complete your<br>booking.
+                        </h3>
+                    </div>
+
+                    <div class="stepper">
+                        <div class="stepper__dot is-done">✓</div>
+                        <span>Dates</span>
+                        <div class="stepper__line"></div>
+                        <div class="stepper__dot is-active">2</div>
+                        <span>Details</span>
+                    </div>
+                </div>
+
+                <p class="text-base text-charcoal/60 font-light max-w-2xl leading-[1.75]">
+                    Your dates are confirmed. Tell us about your stay — our team will confirm availability and rates within the day.
+                </p>
+            </div>
+
+            <!-- DATE CHIPS (READ-ONLY) -->
+            <div class="mb-10 md:mb-12">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="date-chip">
+                        <svg class="date-chip__icon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 2v4M16 2v4M3 10h18M5 6h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg>
+                        <div>
+                            <div class="date-chip__label">Check-in</div>
+                            <div class="date-chip__value" id="chipCheckIn">—</div>
+                        </div>
+                    </div>
+                    <div class="date-chip">
+                        <svg class="date-chip__icon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 2v4M16 2v4M3 10h18M5 6h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg>
+                        <div>
+                            <div class="date-chip__label">Check-out</div>
+                            <div class="date-chip__value" id="chipCheckOut">—</div>
+                        </div>
+                    </div>
+                    <div class="date-chip">
+                        <svg class="date-chip__icon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 2M12 22a10 10 0 100-20 10 10 0 000 20z"/></svg>
+                        <div>
+                            <div class="date-chip__label">Nights</div>
+                            <div class="date-chip__value" id="chipNights">—</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-3 text-right">
+                    <button type="button" id="changeDatesBtn" class="inline-flex items-center gap-2 text-[10px] tracking-[0.24em] uppercase text-moss hover:text-seafoam transition-colors">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M15 19l-7-7 7-7"/></svg>
+                        Change dates
+                    </button>
+                </div>
+            </div>
+
+            <!-- GRID: FORM + SUMMARY -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
+
+                <!-- FORM -->
+                <div class="lg:col-span-7">
+                    <form id="bookingForm" novalidate>
+
+                        <!-- SECTION 1: GUESTS -->
+                        <div class="mb-12">
+                            <div class="flex items-baseline gap-4 mb-7">
+                                <span class="font-serif text-xs text-moss/50 tracking-[0.4em]">01</span>
+                                <h4 class="font-serif text-xl md:text-2xl text-charcoal">Your party</h4>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-7">
+                                <div>
+                                    <label class="field-label" for="adults">Adults</label>
+                                    <select id="adults" name="adults" class="field-select" required>
+                                        <option value="1">1</option>
+                                        <option value="2" selected>2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="field-label" for="children">Children</label>
+                                    <select id="children" name="children" class="field-select" required>
+                                        <option value="0" selected>0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION 2: ROOM -->
+                        <div class="mb-12" id="choosePavilionSection">
+                            <div class="flex items-baseline gap-4 mb-7">
+                                <span class="font-serif text-xs text-moss/50 tracking-[0.4em]">02</span>
+                                <h4 class="font-serif text-xl md:text-2xl text-charcoal">Choose your pavilion</h4>
+                            </div>
+
+                            <!-- Mode 4-card (dari navbar) -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="roomGrid">
+                                <div class="room-card" data-room="Rumah Ibu" data-room-price="1200">
+                                    <p class="font-serif text-base text-charcoal mb-1">Rumah Ibu</p>
+                                    <p class="text-[9.5px] tracking-[0.24em] uppercase text-moss/60 mb-1.5">Master Suite · 2 BR</p>
+                                    <p class="text-[13px] text-charcoal/60 font-light">Sleeps up to 4</p>
+                                </div>
+                                <div class="room-card" data-room="Rumah Bunga" data-room-price="750">
+                                    <p class="font-serif text-base text-charcoal mb-1">Rumah Bunga</p>
+                                    <p class="text-[9.5px] tracking-[0.24em] uppercase text-moss/60 mb-1.5">Garden Pavilion · 1 BR</p>
+                                    <p class="text-[13px] text-charcoal/60 font-light">Sleeps up to 2</p>
+                                </div>
+                                <div class="room-card" data-room="Rumah Rimba" data-room-price="1100">
+                                    <p class="font-serif text-base text-charcoal mb-1">Rumah Rimba</p>
+                                    <p class="text-[9.5px] tracking-[0.24em] uppercase text-moss/60 mb-1.5">Forest Pavilion · 2 BR</p>
+                                    <p class="text-[13px] text-charcoal/60 font-light">Sleeps up to 4</p>
+                                </div>
+                                <div class="room-card" data-room="Rumah Jepun" data-room-price="1050">
+                                    <p class="font-serif text-base text-charcoal mb-1">Rumah Jepun</p>
+                                    <p class="text-[9.5px] tracking-[0.24em] uppercase text-moss/60 mb-1.5">Garden Pavilion · 2 BR</p>
+                                    <p class="text-[13px] text-charcoal/60 font-light">Sleeps up to 4</p>
+                                </div>
+                            </div>
+
+                            <!-- Mode 1-card (dari section Stay) -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 hidden" id="roomGridSingle">
+                                <div class="room-card is-selected is-single" id="roomCardSingle">
+                                    <p class="font-serif text-base text-charcoal mb-1" id="roomCardSingleName">—</p>
+                                    <p class="text-[9.5px] tracking-[0.24em] uppercase text-moss/60 mb-1.5" id="roomCardSingleType">—</p>
+                                    <p class="text-[13px] text-charcoal/60 font-light" id="roomCardSingleGuests">—</p>
+                                </div>
+                            </div>
+
+                            <p id="roomError" class="text-[11px] tracking-[0.16em] uppercase text-seafoam mt-3 hidden">
+                                Please select a pavilion.
+                            </p>
+                        </div>
+
+                        <!-- SECTION 3: CONTACT -->
+                        <div class="mb-12">
+                            <div class="flex items-baseline gap-4 mb-7">
+                                <span class="font-serif text-xs text-moss/50 tracking-[0.4em]">03</span>
+                                <h4 class="font-serif text-xl md:text-2xl text-charcoal">Your details</h4>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-7 mb-7">
+                                <div>
+                                    <label class="field-label" for="fullName">Full name</label>
+                                    <input type="text" id="fullName" name="fullName" class="field-input" placeholder="Type here" required />
+                                </div>
+                                <div>
+                                    <label class="field-label" for="email">Email</label>
+                                    <input type="email" id="email" name="email" class="field-input" placeholder="Type here" required />
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-7 mb-7">
+                                <div>
+                                    <label class="field-label" for="phone">Phone / WhatsApp</label>
+                                    <input type="tel" id="phone" name="phone" class="field-input" placeholder="Type here" required />
+                                </div>
+                                <div>
+                                    <label class="field-label" for="country">Country</label>
+                                    <input type="text" id="country" name="country" class="field-input" placeholder="Type here" required />
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="field-label" for="notes">Special requests <span class="normal-case text-charcoal/30" style="letter-spacing:0;">(optional)</span></label>
+                                <textarea id="notes" name="notes" class="field-textarea" placeholder="Dietary needs, occasion, transfers..."></textarea>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-btn" id="submitBtn">
+                            Request Booking →
+                        </button>
+                    </form>
+                </div>
+
+                <!-- SUMMARY -->
+                <div class="lg:col-span-5">
+                    <div class="bg-charcoal text-mist p-7 md:p-8 lg:sticky lg:top-4">
+                        <span class="eyebrow text-seafoam mb-7 block">Your Stay</span>
+
+                        <div class="mb-7">
+                            <p class="font-serif text-xl text-mist mb-2" id="summaryRoom">Select a pavilion</p>
+                            <p class="text-[10px] tracking-[0.24em] uppercase text-mist/45" id="summaryRoomType">—</p>
+                        </div>
+
+                        <div>
+                            <div class="summary-row">
+                                <span class="summary-row__label">Check-in</span>
+                                <span class="summary-row__value" id="summaryCheckIn">—</span>
+                            </div>
+                            <div class="summary-row">
+                                <span class="summary-row__label">Check-out</span>
+                                <span class="summary-row__value" id="summaryCheckOut">—</span>
+                            </div>
+                            <div class="summary-row">
+                                <span class="summary-row__label">Nights</span>
+                                <span class="summary-row__value" id="summaryNights">—</span>
+                            </div>
+                            <div class="summary-row">
+                                <span class="summary-row__label">Guests</span>
+                                <span class="summary-row__value" id="summaryGuests">—</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-7 pt-7 border-t border-mist/15">
+                            <div class="summary-row">
+                                <span class="summary-row__label">Estimated rate</span>
+                                <span class="summary-row__value" id="summaryRate">—</span>
+                            </div>
+                            <p class="text-[9.5px] tracking-[0.24em] uppercase text-mist/35 mt-4 leading-relaxed">
+                                Rate is an estimate. Final pricing confirmed by our team, inclusive of taxes and services.
+                            </p>
+                        </div>
+
+                        <div class="mt-8 pt-7 border-t border-mist/15">
+                            <p class="text-[10px] tracking-[0.28em] uppercase text-mist/45 mb-3">Need help?</p>
+                            <a href="https://wa.me/60166515532" target="_blank" rel="noopener" class="font-serif text-base text-mist hover:text-seafoam transition-colors">
+                                +60 16 651 5532
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         MODAL 3 — PAYMENT
+    ============================================================ -->
+    <div id="paymentModal" class="payment-modal" role="dialog" aria-modal="true" aria-label="Payment">
+        <div class="payment-modal__inner" data-lenis-prevent>
+            <button class="payment-modal__close" id="paymentClose" aria-label="Close">
+                <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+
+            <!-- Payment content -->
+            <div id="paymentContent">
+                <div class="mb-8 pb-6 border-b border-charcoal/10">
+                    <span class="eyebrow text-seafoam mb-4 block">Payment</span>
+                    <h3 class="font-serif text-3xl md:text-4xl leading-[1.1] tracking-tight text-charcoal">
+                        Secure your stay.
+                    </h3>
+                    <p class="text-charcoal/55 font-light text-sm mt-4 leading-[1.75]">
+                        A 50% deposit confirms your reservation. The balance is due 14 days before arrival.
+                    </p>
+                </div>
+
+                <!-- PAYMENT SUMMARY -->
+                <div class="pay-summary mb-8">
+                    <div class="pay-summary-row">
+                        <span class="pay-summary-row__label" id="payRoomLabel">—</span>
+                        <span class="pay-summary-row__value" id="payRatePerNight">—</span>
+                    </div>
+                    <div class="pay-summary-row">
+                        <span class="pay-summary-row__label" id="payNightsLabel">—</span>
+                        <span class="pay-summary-row__value" id="paySubtotal">—</span>
+                    </div>
+                    <div class="pay-summary-row">
+                        <span class="pay-summary-row__label">Service & taxes</span>
+                        <span class="pay-summary-row__value" id="payTaxes">—</span>
+                    </div>
+                    <div class="pay-summary-row pay-summary-total">
+                        <span class="pay-summary-row__label">Deposit due now</span>
+                        <span class="pay-summary-row__value" id="payDeposit">—</span>
+                    </div>
+                </div>
+
+                <!-- PAYMENT METHOD -->
+                <div class="mb-8">
+                    <span class="field-label">Payment method</span>
+                    <div class="space-y-3" id="payMethods">
+                        <div class="pay-method is-selected" data-method="card">
+                            <div class="pay-method__icon">
+                                <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+                            </div>
+                            <div>
+                                <p class="pay-method__name">Credit / Debit Card</p>
+                                <p class="pay-method__desc">Visa · Mastercard · Amex</p>
+                            </div>
+                        </div>
+                        <div class="pay-method" data-method="fpx">
+                            <div class="pay-method__icon">
+                                <svg viewBox="0 0 24 24"><path d="M4 20V10l8-6 8 6v10M9 20v-6h6v6"/></svg>
+                            </div>
+                            <div>
+                                <p class="pay-method__name">FPX Online Banking</p>
+                                <p class="pay-method__desc">Maybank2u · CIMB · Public Bank</p>
+                            </div>
+                        </div>
+                        <div class="pay-method" data-method="transfer">
+                            <div class="pay-method__icon">
+                                <svg viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+                            </div>
+                            <div>
+                                <p class="pay-method__name">Bank Transfer</p>
+                                <p class="pay-method__desc">Details sent by email</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD FIELDS -->
+                <div id="cardFields" class="mb-8">
+                    <div class="mb-6">
+                        <label class="field-label" for="cardNumber">Card number</label>
+                        <input type="text" id="cardNumber" class="card-field" placeholder="1234 5678 9012 3456" inputmode="numeric" maxlength="23" />
+                    </div>
+                    <div class="mb-6">
+                        <label class="field-label" for="cardName">Name on card</label>
+                        <input type="text" id="cardName" class="card-field" placeholder="Type here" />
+                    </div>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div>
+                            <label class="field-label" for="cardExpiry">Expiry</label>
+                            <input type="text" id="cardExpiry" class="card-field" placeholder="MM / YY" inputmode="numeric" maxlength="7" />
+                        </div>
+                        <div>
+                            <label class="field-label" for="cardCVC">CVC</label>
+                            <input type="text" id="cardCVC" class="card-field" placeholder="123" inputmode="numeric" maxlength="4" />
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="pay-btn" id="payBtn">
+                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                    Pay Deposit Securely
+                </button>
+
+                <div class="secure-badge">
+                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2l8 4v6c0 5-3.5 9.5-8 10-4.5-.5-8-5-8-10V6l8-4z"/></svg>
+                    Secured · SSL Encrypted · PCI Compliant
+                </div>
+            </div>
+
+            <!-- Payment success -->
+            <div id="paymentSuccess" class="pay-success">
+                <div class="pay-success__check">
+                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <span class="eyebrow text-moss mb-4 block">Booking confirmed</span>
+                <h3 class="font-serif text-3xl md:text-4xl text-charcoal mb-4">Thank you.</h3>
+                <p class="text-charcoal/65 font-light leading-[1.75] max-w-md mx-auto mb-8">
+                    Your deposit has been received. A confirmation email with your booking details and receipt is on its way.
+                </p>
+                <button type="button" id="paymentDoneBtn" class="inline-flex items-center gap-3 bg-charcoal text-mist px-7 py-4 text-[10px] tracking-[0.3em] uppercase hover:bg-seafoam transition-colors duration-300">
+                    Close
+                    <span>→</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- LIVE CHAT -->
     <div id="chatPanel" class="chat-panel" role="dialog" aria-label="Chat with Singgah Sana">
         <div class="chat-header">
@@ -1517,6 +2311,9 @@
             </div>
         </div>
 
+        <div class="chat-footer">
+            Kampung Janda Baik, Pahang
+        </div>
     </div>
 
     <button id="chatButton" type="button" class="chat-button" aria-label="Open chat">
@@ -1862,7 +2659,7 @@
                 return `${monthShort[cell.month]} ${cell.day}`;
             }
 
-            function updateSummary() {
+            function updateCalSummary() {
                 const summary = document.getElementById('calSummary');
                 const summaryText = document.getElementById('calSummaryText');
                 const nightsText = document.getElementById('calNightsText');
@@ -1894,7 +2691,7 @@
                     else if (outDate.getTime() === inDate.getTime()) { calState.checkIn = null; calState.checkOut = null; }
                     else { calState.checkIn = clicked; calState.checkOut = null; }
                 }
-                updateSummary();
+                updateCalSummary();
                 renderCalendar();
             }
 
@@ -1959,23 +2756,14 @@
             });
             document.getElementById('calReset')?.addEventListener('click', () => {
                 calState.checkIn = null; calState.checkOut = null;
-                updateSummary(); renderCalendar();
-            });
-            document.getElementById('calContinue')?.addEventListener('click', () => {
-                if (!calState.checkIn || !calState.checkOut) {
-                    alert('Please select both a check-in and check-out date.');
-                    return;
-                }
-                const params = new URLSearchParams({
-                    in: dateKey(calState.checkIn.year, calState.checkIn.month, calState.checkIn.day),
-                    out: dateKey(calState.checkOut.year, calState.checkOut.month, calState.checkOut.day)
-                });
-                window.location.href = `booking.html?${params.toString()}`;
+                updateCalSummary(); renderCalendar();
             });
 
             renderCalendar();
 
-            // BOOKING MODAL
+            // ============================================================
+            // BOOKING MODAL (Calendar) — open / close
+            // ============================================================
             const bookingModal = document.getElementById('bookingModal');
             const bookingClose = document.getElementById('bookingClose');
             const bookingInner = bookingModal ? bookingModal.querySelector('.booking-modal__inner') : null;
@@ -1996,15 +2784,380 @@
                 document.body.style.overflow = '';
             }
 
-            document.querySelectorAll('[data-open-booking]').forEach(el => {
-                el.addEventListener('click', (e) => { e.preventDefault(); openBooking(); });
+            // ============================================================
+            // BOOKING DETAIL MODAL — state & handlers
+            // ============================================================
+            const bookingDetailModal = document.getElementById('bookingDetailModal');
+            const bookingDetailClose = document.getElementById('bookingDetailClose');
+            const bookingDetailInner = bookingDetailModal ? bookingDetailModal.querySelector('.booking-detail-modal__inner') : null;
+
+            const bookingState = {
+                room: null,
+                roomType: '',
+                roomPrice: 0,
+                checkIn: null,
+                checkOut: null,
+                nights: 0,
+                adults: 2,
+                children: 0
+            };
+
+            function openBookingDetail() {
+                if (!bookingDetailModal) return;
+                bookingDetailModal.classList.add('is-open');
+                lenis.stop();
+                document.documentElement.style.overflow = 'hidden';
+                document.body.style.overflow = 'hidden';
+                if (bookingDetailInner) bookingDetailInner.scrollTop = 0;
+            }
+            function closeBookingDetail() {
+                if (!bookingDetailModal) return;
+                bookingDetailModal.classList.remove('is-open');
+                lenis.start();
+                document.documentElement.style.overflow = '';
+                document.body.style.overflow = '';
+            }
+
+            // "Change dates" — close detail, reopen calendar
+            document.getElementById('changeDatesBtn')?.addEventListener('click', () => {
+                closeBookingDetail();
+                setTimeout(() => openBooking(), 300);
             });
+
+            // "Continue to Booking" inside calendar — transfer state & open detail modal
+            document.getElementById('calContinue')?.addEventListener('click', () => {
+                if (!calState.checkIn || !calState.checkOut) {
+                    alert('Please select both a check-in and check-out date.');
+                    return;
+                }
+
+                const inDate = new Date(calState.checkIn.year, calState.checkIn.month, calState.checkIn.day);
+                const outDate = new Date(calState.checkOut.year, calState.checkOut.month, calState.checkOut.day);
+                const nights = Math.round((outDate - inDate) / (1000 * 60 * 60 * 24));
+
+                bookingState.checkIn = inDate;
+                bookingState.checkOut = outDate;
+                bookingState.nights = nights;
+
+                updateChipsAndSummary();
+
+                closeBooking();
+                setTimeout(() => openBookingDetail(), 300);
+            });
+
+            function formatDateShort(d) {
+                if (!d) return '—';
+                return `${monthShort[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+            }
+
+            function updateChipsAndSummary() {
+                document.getElementById('chipCheckIn').textContent = formatDateShort(bookingState.checkIn);
+                document.getElementById('chipCheckOut').textContent = formatDateShort(bookingState.checkOut);
+                document.getElementById('chipNights').textContent = bookingState.nights || '—';
+
+                document.getElementById('summaryRoom').textContent = bookingState.room || 'Select a pavilion';
+                document.getElementById('summaryRoomType').textContent = bookingState.roomType || '—';
+                document.getElementById('summaryCheckIn').textContent = formatDateShort(bookingState.checkIn);
+                document.getElementById('summaryCheckOut').textContent = formatDateShort(bookingState.checkOut);
+                document.getElementById('summaryNights').textContent = bookingState.nights > 0 ? bookingState.nights : '—';
+
+                let guestStr = `${bookingState.adults} adult${bookingState.adults !== 1 ? 's' : ''}`;
+                if (bookingState.children > 0) {
+                    guestStr += `, ${bookingState.children} child${bookingState.children !== 1 ? 'ren' : ''}`;
+                }
+                document.getElementById('summaryGuests').textContent = guestStr;
+
+                if (bookingState.room && bookingState.nights > 0) {
+                    const total = bookingState.roomPrice * bookingState.nights;
+                    document.getElementById('summaryRate').textContent =
+                        `RM ${total.toLocaleString('en-MY')} · ${bookingState.nights} night${bookingState.nights !== 1 ? 's' : ''}`;
+                } else if (bookingState.room) {
+                    document.getElementById('summaryRate').textContent =
+                        `RM ${bookingState.roomPrice.toLocaleString('en-MY')} / night`;
+                } else {
+                    document.getElementById('summaryRate').textContent = '—';
+                }
+            }
+
+            // Room selection (4-card mode only)
+            const roomCards = document.querySelectorAll('.room-card:not(.is-single)');
+            roomCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    roomCards.forEach(c => c.classList.remove('is-selected'));
+                    card.classList.add('is-selected');
+
+                    bookingState.room = card.getAttribute('data-room');
+                    bookingState.roomPrice = parseInt(card.getAttribute('data-room-price'), 10);
+
+                    const typeEl = card.querySelector('p:nth-child(2)');
+                    bookingState.roomType = typeEl ? typeEl.textContent : '';
+
+                    document.getElementById('roomError').classList.add('hidden');
+                    updateChipsAndSummary();
+                });
+            });
+
+            // Guests
+            const adultsEl = document.getElementById('adults');
+            const childrenEl = document.getElementById('children');
+            adultsEl.addEventListener('change', () => {
+                bookingState.adults = parseInt(adultsEl.value, 10);
+                updateChipsAndSummary();
+            });
+            childrenEl.addEventListener('change', () => {
+                bookingState.children = parseInt(childrenEl.value, 10);
+                updateChipsAndSummary();
+            });
+
+            // ============================================================
+            // OPEN BOOKING (data-open-booking handler)
+            // Navbar → 4 cards
+            // Scene → single card (pre-selected, non-interactive)
+            // ============================================================
+            const roomGrid = document.getElementById('roomGrid');
+            const roomGridSingle = document.getElementById('roomGridSingle');
+            const roomCardSingle = document.getElementById('roomCardSingle');
+
+            const roomGuestsMap = {
+                'Rumah Ibu': 'Sleeps up to 4',
+                'Rumah Bunga': 'Sleeps up to 2',
+                'Rumah Rimba': 'Sleeps up to 4',
+                'Rumah Jepun': 'Sleeps up to 4'
+            };
+
+            document.querySelectorAll('[data-open-booking]').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
+
+                    const roomAttr = el.getAttribute('data-room');
+                    const roomTypeAttr = el.getAttribute('data-room-type');
+                    const roomPriceAttr = el.getAttribute('data-room-price');
+
+                    if (roomAttr) {
+                        // === Scene button — single card mode ===
+                        bookingState.room = roomAttr;
+                        bookingState.roomType = roomTypeAttr || '';
+                        bookingState.roomPrice = parseInt(roomPriceAttr, 10) || 0;
+
+                        roomGrid.classList.add('hidden');
+                        roomGridSingle.classList.remove('hidden');
+
+                        document.getElementById('roomCardSingleName').textContent = roomAttr;
+                        document.getElementById('roomCardSingleType').textContent = roomTypeAttr || '—';
+                        document.getElementById('roomCardSingleGuests').textContent = roomGuestsMap[roomAttr] || '—';
+
+                        roomCardSingle.classList.add('is-selected');
+
+                        roomCards.forEach(c => c.classList.remove('is-selected'));
+                    } else {
+                        // === Navbar button — 4-card mode ===
+                        bookingState.room = null;
+                        bookingState.roomType = '';
+                        bookingState.roomPrice = 0;
+
+                        roomGrid.classList.remove('hidden');
+                        roomGridSingle.classList.add('hidden');
+
+                        roomCards.forEach(c => c.classList.remove('is-selected'));
+                        roomCardSingle.classList.remove('is-selected');
+                    }
+
+                    document.getElementById('roomError').classList.add('hidden');
+                    updateChipsAndSummary();
+                    openBooking();
+                });
+            });
+
             bookingClose && bookingClose.addEventListener('click', closeBooking);
             bookingModal && bookingModal.addEventListener('click', (e) => {
                 if (e.target === bookingModal) closeBooking();
             });
+
+            bookingDetailClose && bookingDetailClose.addEventListener('click', closeBookingDetail);
+            bookingDetailModal && bookingDetailModal.addEventListener('click', (e) => {
+                if (e.target === bookingDetailModal) closeBookingDetail();
+            });
+
+            // ============================================================
+            // BOOKING FORM SUBMIT → OPEN PAYMENT MODAL
+            // ============================================================
+            const form = document.getElementById('bookingForm');
+            const submitBtn = document.getElementById('submitBtn');
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                if (!bookingState.room) {
+                    document.getElementById('roomError').classList.remove('hidden');
+                    document.getElementById('roomError').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    return;
+                }
+
+                const fullName = document.getElementById('fullName').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const phone = document.getElementById('phone').value.trim();
+                const country = document.getElementById('country').value.trim();
+
+                if (!fullName || !email || !phone || !country) {
+                    alert('Please fill in all required fields.');
+                    return;
+                }
+
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Preparing payment...';
+
+                setTimeout(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Request Booking →';
+
+                    preparePaymentSummary();
+
+                    closeBookingDetail();
+                    setTimeout(() => openPayment(), 300);
+                }, 700);
+            });
+
+            // ============================================================
+            // PAYMENT MODAL
+            // ============================================================
+            const paymentModal = document.getElementById('paymentModal');
+            const paymentClose = document.getElementById('paymentClose');
+            const paymentInner = paymentModal ? paymentModal.querySelector('.payment-modal__inner') : null;
+            const paymentContent = document.getElementById('paymentContent');
+            const paymentSuccess = document.getElementById('paymentSuccess');
+
+            function openPayment() {
+                if (!paymentModal) return;
+                paymentModal.classList.add('is-open');
+                lenis.stop();
+                document.documentElement.style.overflow = 'hidden';
+                document.body.style.overflow = 'hidden';
+                if (paymentInner) paymentInner.scrollTop = 0;
+            }
+            function closePayment() {
+                if (!paymentModal) return;
+                paymentModal.classList.remove('is-open');
+                lenis.start();
+                document.documentElement.style.overflow = '';
+                document.body.style.overflow = '';
+            }
+
+            paymentClose && paymentClose.addEventListener('click', closePayment);
+            paymentModal && paymentModal.addEventListener('click', (e) => {
+                if (e.target === paymentModal) closePayment();
+            });
+
+            function preparePaymentSummary() {
+                const nights = bookingState.nights;
+                const ratePerNight = bookingState.roomPrice;
+                const subtotal = nights * ratePerNight;
+                const taxes = Math.round(subtotal * 0.08);
+                const total = subtotal + taxes;
+                const deposit = Math.round(total * 0.5);
+
+                document.getElementById('payRoomLabel').textContent = bookingState.room || '—';
+                document.getElementById('payRatePerNight').textContent = `RM ${ratePerNight.toLocaleString('en-MY')} / night`;
+                document.getElementById('payNightsLabel').textContent = `${nights} night${nights !== 1 ? 's' : ''}`;
+                document.getElementById('paySubtotal').textContent = `RM ${subtotal.toLocaleString('en-MY')}`;
+                document.getElementById('payTaxes').textContent = `RM ${taxes.toLocaleString('en-MY')}`;
+                document.getElementById('payDeposit').textContent = `RM ${deposit.toLocaleString('en-MY')}`;
+            }
+
+            const payMethods = document.querySelectorAll('.pay-method');
+            const cardFields = document.getElementById('cardFields');
+
+            payMethods.forEach(method => {
+                method.addEventListener('click', () => {
+                    payMethods.forEach(m => m.classList.remove('is-selected'));
+                    method.classList.add('is-selected');
+
+                    const methodType = method.getAttribute('data-method');
+                    if (methodType === 'card') {
+                        cardFields.style.display = '';
+                    } else {
+                        cardFields.style.display = 'none';
+                    }
+                });
+            });
+
+            document.getElementById('cardNumber')?.addEventListener('input', (e) => {
+                let v = e.target.value.replace(/\D/g, '').substring(0, 16);
+                v = v.replace(/(.{4})/g, '$1 ').trim();
+                e.target.value = v;
+            });
+
+            document.getElementById('cardExpiry')?.addEventListener('input', (e) => {
+                let v = e.target.value.replace(/\D/g, '').substring(0, 4);
+                if (v.length >= 3) v = v.substring(0, 2) + ' / ' + v.substring(2);
+                e.target.value = v;
+            });
+
+            document.getElementById('cardCVC')?.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/\D/g, '').substring(0, 4);
+            });
+
+            const payBtn = document.getElementById('payBtn');
+            payBtn?.addEventListener('click', () => {
+                const selectedMethod = document.querySelector('.pay-method.is-selected')?.getAttribute('data-method');
+
+                if (selectedMethod === 'card') {
+                    const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+                    const cardName = document.getElementById('cardName').value.trim();
+                    const expiry = document.getElementById('cardExpiry').value.trim();
+                    const cvc = document.getElementById('cardCVC').value.trim();
+
+                    if (cardNumber.length < 15) { alert('Please enter a valid card number.'); return; }
+                    if (!cardName) { alert('Please enter the name on card.'); return; }
+                    if (expiry.length < 7) { alert('Please enter a valid expiry date.'); return; }
+                    if (cvc.length < 3) { alert('Please enter a valid CVC.'); return; }
+                }
+
+                payBtn.disabled = true;
+                payBtn.innerHTML = 'Processing...';
+
+                setTimeout(() => {
+                    paymentContent.style.display = 'none';
+                    paymentSuccess.classList.add('is-visible');
+                }, 1400);
+            });
+
+            document.getElementById('paymentDoneBtn')?.addEventListener('click', () => {
+                closePayment();
+                setTimeout(() => {
+                    paymentContent.style.display = '';
+                    paymentSuccess.classList.remove('is-visible');
+                    payBtn.disabled = false;
+                    payBtn.innerHTML = '<svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg> Pay Deposit Securely';
+
+                    document.getElementById('cardNumber').value = '';
+                    document.getElementById('cardName').value = '';
+                    document.getElementById('cardExpiry').value = '';
+                    document.getElementById('cardCVC').value = '';
+
+                    form.reset();
+                    roomCards.forEach(c => c.classList.remove('is-selected'));
+                    roomCardSingle.classList.remove('is-selected');
+
+                    roomGrid.classList.remove('hidden');
+                    roomGridSingle.classList.add('hidden');
+
+                    bookingState.room = null;
+                    bookingState.roomType = '';
+                    bookingState.roomPrice = 0;
+                    bookingState.adults = 2;
+                    bookingState.children = 0;
+
+                    updateChipsAndSummary();
+                }, 500);
+            });
+
+            // ESC key closes topmost modal
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && bookingModal && bookingModal.classList.contains('is-open')) closeBooking();
+                if (e.key === 'Escape') {
+                    if (paymentModal && paymentModal.classList.contains('is-open')) closePayment();
+                    else if (bookingDetailModal && bookingDetailModal.classList.contains('is-open')) closeBookingDetail();
+                    else if (bookingModal && bookingModal.classList.contains('is-open')) closeBooking();
+                }
             });
 
             // SMOOTH ANCHOR SCROLL
@@ -2033,7 +3186,9 @@
                 }, 200);
             });
 
+            // ============================================================
             // LIVE CHAT
+            // ============================================================
             const chatPanel = document.getElementById('chatPanel');
             const chatButton = document.getElementById('chatButton');
             const chatClose = document.getElementById('chatClose');
